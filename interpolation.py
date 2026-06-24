@@ -18,6 +18,7 @@ def interpolation_search(arr, target):
                 return low, comparisons
             return -1, comparisons
  
+        # Interpolation formula
         pos = low + int(((target - arr[low]) * (high - low))
                         / (arr[high] - arr[low]))
  
@@ -54,24 +55,28 @@ def performance_analysis():
     for size in sizes:
         arr = sorted(random.sample(range(size * 10), size))
         target = arr[random.randint(0, size - 1)]
-
+ 
+        # Interpolation Search timing
         start = time.perf_counter()
         for _ in range(100):
             idx_is, comp_is = interpolation_search(arr, target)
         is_time = (time.perf_counter() - start) / 100 * 1000
  
+        # Binary Search timing
         start = time.perf_counter()
         for _ in range(100):
             idx_bs, comp_bs = binary_search(arr, target)
-        bs_time = (time.perf_counter() - start) / 100* 1000
-
-        print(f"{size:>10} {is_time:>14.4f} {bs_time:>14.4f} ")
-
-        arr = [2,5,10,23,35,48,60,75,90,105,120]
-        target=60
-        idx,comps=interpolation_search(arr, target)
-        print(f"ArrAY: {arr}")
-        print(f"searching for:{target}")
-        print(f"Found at index: {idx} with comparisons: {comps}")
-        print()
-        performance_analysis()
+        bs_time = (time.perf_counter() - start) / 100 * 1000
+ 
+        print(f"{size:>10} {is_time:>14.4f} {bs_time:>14.4f} "
+              f"{comp_is:>16} {comp_bs:>16}")
+ 
+# --- Main ---
+arr = [2, 5, 10, 15, 23, 35, 48, 60, 75, 90, 105, 120]
+target = 35
+idx, comps = interpolation_search(arr, target)
+print(f"Array: {arr}")
+print(f"Searching for: {target}")
+print(f"Found at index: {idx}, Comparisons: {comps}")
+print()
+performance_analysis()
